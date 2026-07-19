@@ -3,7 +3,26 @@ import numpy as np
 import matplotlib.pyplot as plt
 import io
 from scipy.io import wavfile
+import qrcode
+import streamlit as st
+from io import BytesIO
 
+# 1. 내 웹사이트 주소 지정
+url = "https://dsljcwh5mnuqujahatmhaq.streamlit.app/"
+
+# 2. QR 코드 생성
+qr = qrcode.QRCode(box_size=10, border=2)
+qr.add_data(url)
+qr.make(fit=True)
+img = qr.make_image(fill_color="black", back_color="white")
+
+# 3. Streamlit 화면에 표시할 수 있도록 변환
+buf = BytesIO()
+img.save(buf, format="PNG")
+byte_im = buf.getvalue()
+
+# 4. 화면에 QR 코드 띄우기
+st.image(byte_im, caption="스마트폰으로 스캔하여 접속하기", width=200)
 st.set_page_config(layout="wide")
 
 # ==========================================
